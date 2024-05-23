@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # создаём каталог task с вложенными директориями
 # task
 #   dir1
@@ -9,7 +9,7 @@
 mkdir -p task/dir1 task/dir2 task/dir3/dir4
 
 # изменяем текущую директорию на task
-cd task || exit
+cd task 
 
 # создаём пустой файл task/dir2/empty
 touch dir2/empty
@@ -19,7 +19,7 @@ touch dir2/empty
 # echo "$1, привет!"
 touch dir2/hello.sh
 echo '#!/bin/bash
-echo "$NAME, привет!"' > dir2/hello.sh
+echo "$1, привет!"' > dir2/hello.sh
 
 # устанавливаем для task/dir2/hello.sh права rwxrw-r--
 chmod 764 dir2/hello.sh
@@ -42,7 +42,7 @@ export NAME="Всем студентам"
 
 # запускаем task/dir2/hello.sh с переменной окружения NAME в качестве аргумента
 # вывод скрипта должен дописаться в файл task/dir1/summary.txt
-NAME="Всем студентам" dir2/hello.sh >> dir1/summary.txt
+dir2/hello.sh "$NAME" >> dir1/summary.txt
 
 # перемещаем с переименованием task/dir1/summary.txt в task/Практическое задание
 mv dir1/summary.txt "Практическое задание"
